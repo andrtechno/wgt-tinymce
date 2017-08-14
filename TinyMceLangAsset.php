@@ -13,6 +13,6 @@ class TinyMceLangAsset extends AssetBundle
     public $sourcePath = '@vendor/panix/wgt-tinymce/assets';
 
     public $depends = [
-        'panix\wgt-tinymce\TinyMceAsset'
+        'panix\tinymce\TinyMceAsset'
     ];
 }
