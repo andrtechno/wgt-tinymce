@@ -4,15 +4,15 @@
  * @link http://2amigos.us
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace panix\engine\widgets\tinymce;
+namespace panix\tinymce;
 
 use yii\web\AssetBundle;
 
 class TinyMceLangAsset extends AssetBundle
 {
-    public $sourcePath = '@vendor/panix/engine/widgets/tinymce/assets';
+    public $sourcePath = '@vendor/panix/wgt-tinymce/assets';
 
     public $depends = [
-        'panix\engine\widgets\tinymce\TinyMceAsset'
+        'panix\wgt-tinymce\TinyMceAsset'
     ];
 }
