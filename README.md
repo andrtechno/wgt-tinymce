@@ -2,6 +2,8 @@ wgt-tinymce
 ===========
 Widget for Yii Framework 2.0 to use [TinyMce](http://www.tinymce.com)
 
+[![Latest Stable Version](https://poser.pugx.org/panix/wgt-tinymce/v/stable)](https://packagist.org/packages/panix/wgt-tinymce) [![Total Downloads](https://poser.pugx.org/panix/wgt-tinymce/downloads)](https://packagist.org/packages/panix/wgt-tinymce) [![Monthly Downloads](https://poser.pugx.org/panix/wgt-tinymce/d/monthly)](https://packagist.org/packages/panix/wgt-tinymce) [![Daily Downloads](https://poser.pugx.org/panix/wgt-tinymce/d/daily)](https://packagist.org/packages/panix/wgt-tinymce) [![Latest Unstable Version](https://poser.pugx.org/panix/wgt-tinymce/v/unstable)](https://packagist.org/packages/panix/wgt-tinymce) [![License](https://poser.pugx.org/panix/wgt-tinymce/license)](https://packagist.org/packages/panix/wgt-tinymce)
+
 Installation
 ------------
 
