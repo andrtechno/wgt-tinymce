@@ -1,8 +1,10 @@
 <?php
 /**
- * @copyright Copyright (c) 2013-2017 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ *
+ * TinyMCE renders a tinyMCE js plugin for WYSIWYG editing.
+ *
+ * @author CORNER CMS <dev@corner-cms.com>
+ * @link http://www.corner-cms.com/
  */
 namespace panix\tinymce;
 
@@ -11,14 +13,6 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\widgets\InputWidget;
 
-/**
- *
- * TinyMCE renders a tinyMCE js plugin for WYSIWYG editing.
- *
- * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
- */
 class TinyMce extends InputWidget
 {
     /**

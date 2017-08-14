@@ -1,7 +1,7 @@
 {
     "name": "panix/wgt-tinymce",
-    "description": "Widget for Yii Framework 2.0 to use Tinymce",
-    "keywords": ["yii2", "extension", "widget", "form", "tinymce"],
+    "description": "Widget Tinymce",
+    "keywords": ["corner-cms", "extension", "widget", "form", "tinymce"],
     "homepage": "https://github.com/panix/wgt-tinymce",
     "type": "extension",
     "license": "BSD 3-Clause",
