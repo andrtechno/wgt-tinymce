@@ -2,7 +2,7 @@
     "name": "panix/wgt-tinymce",
     "description": "Widget Tinymce",
     "keywords": ["corner-cms", "extension", "widget", "form", "tinymce"],
-    "homepage": "https://github.com/panix/wgt-tinymce",
+    "homepage": "https://github.com/andrtechno/wgt-tinymce",
     "type": "extension",
     "license": "BSD 3-Clause",
     "authors": [
