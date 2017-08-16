@@ -6,7 +6,7 @@
  * @author CORNER CMS <dev@corner-cms.com>
  * @link http://www.corner-cms.com/
  */
-namespace panix\tinymce;
+namespace panix\ext\tinymce;
 
 use yii\web\AssetBundle;
 
