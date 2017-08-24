@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * TinyMCE renders a tinyMCE js plugin for WYSIWYG editing.
@@ -6,6 +7,7 @@
  * @author CORNER CMS <dev@corner-cms.com>
  * @link http://www.corner-cms.com/
  */
+
 namespace panix\ext\tinymce;
 
 use Yii;
@@ -13,18 +15,20 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\widgets\InputWidget;
 
-class TinyMce extends InputWidget
-{
+class TinyMce extends InputWidget {
+
     /**
      * @var string the language to use. Defaults to null (en).
      */
     public $language;
+
     /**
      * @var array the options for the TinyMCE JS plugin.
      * Please refer to the TinyMCE JS plugin Web page for possible options.
      * @see http://www.tinymce.com/wiki.php/Configuration
      */
     public $clientOptions = [];
+
     /**
      * @var bool whether to set the on change event for the editor. This is required to be able to validate data.
      * @see https://github.com/2amigos/yii2-tinymce-widget/issues/7
@@ -34,8 +38,7 @@ class TinyMce extends InputWidget
     /**
      * @inheritdoc
      */
-    public function run()
-    {
+    public function run() {
         if ($this->hasModel()) {
             echo Html::activeTextarea($this->model, $this->attribute, $this->options);
         } else {
@@ -47,8 +50,7 @@ class TinyMce extends InputWidget
     /**
      * Registers tinyMCE js plugin
      */
-    protected function registerClientScript()
-    {
+    protected function registerClientScript() {
         $lang = Yii::$app->language;
         $js = [];
         $view = $this->getView();
@@ -58,6 +60,15 @@ class TinyMce extends InputWidget
         $id = $this->options['id'];
 
         $this->clientOptions['selector'] = "#$id";
+
+        $this->clientOptions['plugins'] = [
+            "advlist autolink lists link charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ];
+        $this->clientOptions['toolbar'] = "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image";
+
+
         // @codeCoverageIgnoreStart
         if ($lang !== null && $lang !== 'en') {
             $langFile = "langs/{$lang}.js";
@@ -66,8 +77,8 @@ class TinyMce extends InputWidget
             $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
         }
 
-                $this->clientOptions['language'] = $lang;
-                        $this->clientOptions['branding'] = false;
+        $this->clientOptions['language'] = $lang;
+        $this->clientOptions['branding'] = false;
         // @codeCoverageIgnoreEnd
 
         $options = Json::encode($this->clientOptions);
@@ -78,4 +89,5 @@ class TinyMce extends InputWidget
         }
         $view->registerJs(implode("\n", $js));
     }
+
 }
