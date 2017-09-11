@@ -3,7 +3,7 @@
     "description": "Widget Tinymce",
     "keywords": ["corner-cms", "extension", "widget", "form", "tinymce"],
     "homepage": "https://github.com/andrtechno/wgt-tinymce",
-    "type": "yii2-extension",
+    "type": "extension",
     "license": "BSD 3-Clause",
     "authors": [
         {
