@@ -4,7 +4,7 @@
     "keywords": ["corner-cms", "extension", "widget", "form", "tinymce"],
     "homepage": "https://github.com/andrtechno/wgt-tinymce",
     "type": "extension",
-    "license": "BSD 3-Clause",
+    "license": "MIT",
     "authors": [
         {
             "name": "CORNER CMS",
