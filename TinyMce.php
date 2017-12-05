@@ -60,7 +60,7 @@ class TinyMce extends InputWidget {
         $id = $this->options['id'];
 
         $this->clientOptions['selector'] = "#$id";
-       $this->clientOptions['contextmenu'] = "link image inserttable | cell row column deletetable";
+        $this->clientOptions['contextmenu'] = "link image inserttable | cell row column deletetable";
         $this->clientOptions['plugins'] = [
             "autoresize template advlist autolink lists link charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
@@ -77,85 +77,92 @@ class TinyMce extends InputWidget {
             $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
         }
 
- $this->clientOptions['resize'] = true;
+        $this->clientOptions['resize'] = true;
         $this->clientOptions['language'] = $lang;
         $this->clientOptions['branding'] = false;
         // @codeCoverageIgnoreEnd
 
-        
-         $this->clientOptions['paste_enable_default_filters'] = false;
-             $this->clientOptions['paste_filter_drop'] = false;
-        
-        
- $this->clientOptions['templates'] = array(
-                array(
-                    'title' => 'Alert success',
-                    'content' => '<div class="alert alert-success" role="alert">My alert content</div>'
-                ),
-                array(
-                    'title' => 'Alert danger',
-                    'content' => '<div class="alert alert-danger" role="alert">My alert content</div>'
-                ),
-                array(
-                    'title' => 'Alert info',
-                    'content' => '<div class="alert alert-info" role="alert">My alert content</div>'
-                ),
-                array(
-                    'title' => 'Alert warning',
-                    'content' => '<div class="alert alert-warning" role="alert">My alert content</div>'
-                ),
-                array(
-                    'title' => 'Label default',
-                    'content' => '<span class="label label-default">Default</span>'
-                ),
-                array(
-                    'title' => 'Label primary',
-                    'content' => '<span class="label label-primary">Primary</span>'
-                ),
-                array(
-                    'title' => 'Label success',
-                    'content' => '<span class="label label-success">Success</span>'
-                ),
-                array(
-                    'title' => 'Label info',
-                    'content' => '<span class="label label-info">Info</span>'
-                ),
-                array(
-                    'title' => 'Label warning',
-                    'content' => '<span class="label label-warning">Warning</span>'
-                ),
-                array(
-                    'title' => 'Label danger',
-                    'content' => '<span class="label label-danger">Danger</span>'
-                ),
-            );
-             $this->clientOptions['table_class_list'] = array(
-                array('title' => 'None', 'value' => ''),
-                array('title' => 'Striped', 'value' => 'table table-striped'),
-                array('title' => 'Bordered', 'value' => 'table table-bordered'),
-                array('title' => 'Bordered & Striped', 'value' => 'table table-bordered table-striped'),
-                array('title' => 'Hover', 'value' => 'table table-hover'),
-                array('title' => 'Condensed', 'value' => 'table table-condensed'),
-            );
-             $this->clientOptions['image_title'] = true;
-             $this->clientOptions['image_class_list'] = array(
-                array('title' => 'None', 'value' => ''),
-                array('title' => 'Rounded', 'value' => 'img-rounded'),
-                array('title' => 'Rounded & Responsive', 'value' => 'img-rounded img-responsive'),
-                array('title' => 'Circle', 'value' => 'img-circle'),
-                array('title' => 'Circle & Responsive', 'value' => 'img-circle img-responsive'),
-                array('title' => 'Thumbnail', 'value' => 'img-thumbnail'),
-                array('title' => 'Thumbnail & Responsive', 'value' => 'img-thumbnail img-responsive'),
-                array('title' => 'Responsive', 'value' => 'img-responsive'),
-            );
-        
-        
-        
-        
-        
-        
-        
-        
+
+        $this->clientOptions['paste_enable_default_filters'] = false;
+        $this->clientOptions['paste_filter_drop'] = false;
+
+
+        $this->clientOptions['templates'] = array(
+            array(
+                'title' => 'Alert success',
+                'content' => '<div class="alert alert-success" role="alert">My alert content</div>'
+            ),
+            array(
+                'title' => 'Alert danger',
+                'content' => '<div class="alert alert-danger" role="alert">My alert content</div>'
+            ),
+            array(
+                'title' => 'Alert info',
+                'content' => '<div class="alert alert-info" role="alert">My alert content</div>'
+            ),
+            array(
+                'title' => 'Alert warning',
+                'content' => '<div class="alert alert-warning" role="alert">My alert content</div>'
+            ),
+            array(
+                'title' => 'Label default',
+                'content' => '<span class="label label-default">Default</span>'
+            ),
+            array(
+                'title' => 'Label primary',
+                'content' => '<span class="label label-primary">Primary</span>'
+            ),
+            array(
+                'title' => 'Label success',
+                'content' => '<span class="label label-success">Success</span>'
+            ),
+            array(
+                'title' => 'Label info',
+                'content' => '<span class="label label-info">Info</span>'
+            ),
+            array(
+                'title' => 'Label warning',
+                'content' => '<span class="label label-warning">Warning</span>'
+            ),
+            array(
+                'title' => 'Label danger',
+                'content' => '<span class="label label-danger">Danger</span>'
+            ),
+        );
+        $this->clientOptions['table_class_list'] = array(
+            array('title' => 'None', 'value' => ''),
+            array('title' => 'Striped', 'value' => 'table table-striped'),
+            array('title' => 'Bordered', 'value' => 'table table-bordered'),
+            array('title' => 'Bordered & Striped', 'value' => 'table table-bordered table-striped'),
+            array('title' => 'Hover', 'value' => 'table table-hover'),
+            array('title' => 'Condensed', 'value' => 'table table-condensed'),
+        );
+        $this->clientOptions['image_title'] = true;
+        $this->clientOptions['image_class_list'] = array(
+            array('title' => 'None', 'value' => ''),
+            array('title' => 'Rounded', 'value' => 'img-rounded'),
+            array('title' => 'Rounded & Responsive', 'value' => 'img-rounded img-responsive'),
+            array('title' => 'Circle', 'value' => 'img-circle'),
+            array('title' => 'Circle & Responsive', 'value' => 'img-circle img-responsive'),
+            array('title' => 'Thumbnail', 'value' => 'img-thumbnail'),
+            array('title' => 'Thumbnail & Responsive', 'value' => 'img-thumbnail img-responsive'),
+            array('title' => 'Responsive', 'value' => 'img-responsive'),
+        );
+
+
+        if (file_exists(Yii::getAlias("@themeroot/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
+
+            $this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
+            /* $defaultOptions['content_css'] = array(
+              Yii::app()->createAbsoluteUrl(Yii::app()->controller->getBaseAssetsUrl() . '/css/bootstrap.min.css'),
+              Yii::app()->createAbsoluteUrl(Yii::app()->controller->getAssetsUrl() . '/css/theme.css'),
+              ); */
+        }
+
+
+
+
+
         $options = Json::encode($this->clientOptions);
 
         $js[] = "tinymce.init($options);";
