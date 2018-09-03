@@ -15,7 +15,8 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\widgets\InputWidget;
 
-class TinyMce extends InputWidget {
+class TinyMce extends InputWidget
+{
 
     /**
      * @var string the language to use. Defaults to null (en).
@@ -38,7 +39,8 @@ class TinyMce extends InputWidget {
     /**
      * @inheritdoc
      */
-    public function run() {
+    public function run()
+    {
         if ($this->hasModel()) {
             echo Html::activeTextarea($this->model, $this->attribute, $this->options);
         } else {
@@ -50,21 +52,26 @@ class TinyMce extends InputWidget {
     /**
      * Registers tinyMCE js plugin
      */
-    protected function registerClientScript() {
+    protected function registerClientScript()
+    {
         $lang = Yii::$app->language;
         $js = [];
         $view = $this->getView();
 
         TinyMceAsset::register($view);
 
+        $assetsPlugins = Yii::$app->getAssetManager()->publish(Yii::getAlias("@vendor/panix/wgt-tinymce/plugins"));
+        // $assetsUrl = $assetsPaths[1];
+
+
         $id = $this->options['id'];
 
         $this->clientOptions['selector'] = "#$id";
         $this->clientOptions['contextmenu'] = "link image inserttable | cell row column deletetable";
         $this->clientOptions['plugins'] = [
-            "autoresize template advlist autolink lists link charmap print preview anchor",
+            "autoresize image template advlist autolink lists link charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste pagebreak"
+            "insertdatetime media table contextmenu paste pagebreak moxiemanager"
         ];
         $this->clientOptions['toolbar'] = "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | pagebreak template";
 
@@ -77,90 +84,119 @@ class TinyMce extends InputWidget {
             $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
         }
 
+        // $this->clientOptions['external_filemanager_path'] = "/filemanager/";
+        // $this->clientOptions['filemanager_title'] = "Responsive Filemanager";
+        $this->clientOptions['external_plugins'] = [
+            //"responsivefilemanager" => $assetsPlugins[1]."/filemanager/plugin.min.js",
+            "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js"
+        ];
+
+
+        //$moxiemanager_rootpath = Yii::getAlias('@web/uploads/content');
+        $moxiemanager_rootpath = Yii::getAlias('@webroot/uploads/content');
+        if (isset(Yii::$app->controller->module)) {
+            if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
+                // $moxiemanager_rootpath = Yii::$app->getModule(Yii::$app->controller->module->id)->uploadPath;
+            }
+        }
+        //die($moxiemanager_rootpath);
+
+        //MoxieManager options
+        $this->clientOptions['moxiemanager_rootpath'] = $moxiemanager_rootpath;
+        $this->clientOptions['moxiemanager_language'] = Yii::$app->language;
+        $this->clientOptions['moxiemanager_skin'] = 'custom';
+        $this->clientOptions['moxiemanager_title'] = 'FileManager CMS';
+
+
+//        $this->clientOptions['moxiemanager_image_settings'] = [
+//            'moxiemanager_title' => 'Images',
+//            'moxiemanager_extensions' => 'jpg,png,gif',
+//            'moxiemanager_rootpath' => '/testfiles/testfolder',
+//            'moxiemanager_view' => 'thumbs',
+//        ];
+
+
+        //$this->clientOptions['image_advtab'] = true;
         $this->clientOptions['resize'] = true;
         $this->clientOptions['language'] = $lang;
         $this->clientOptions['branding'] = false;
-        // @codeCoverageIgnoreEnd
+        //$this->clientOptions['paste_enable_default_filters'] = false;
+        //$this->clientOptions['paste_filter_drop'] = false;
+        //$this->clientOptions['relative_urls'] = false;
+        //$this->clientOptions['remove_script_host'] = true;
+        //$this->clientOptions['document_base_url'] = '/';
 
-
-        $this->clientOptions['paste_enable_default_filters'] = false;
-        $this->clientOptions['paste_filter_drop'] = false;
-
-
-        $this->clientOptions['templates'] = array(
-            array(
+        $this->clientOptions['templates'] = [
+            [
                 'title' => 'Alert success',
                 'content' => '<div class="alert alert-success" role="alert">My alert content</div>'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Alert danger',
                 'content' => '<div class="alert alert-danger" role="alert">My alert content</div>'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Alert info',
                 'content' => '<div class="alert alert-info" role="alert">My alert content</div>'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Alert warning',
                 'content' => '<div class="alert alert-warning" role="alert">My alert content</div>'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Label default',
                 'content' => '<span class="label label-default">Default</span>'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Label primary',
                 'content' => '<span class="label label-primary">Primary</span>'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Label success',
                 'content' => '<span class="label label-success">Success</span>'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Label info',
                 'content' => '<span class="label label-info">Info</span>'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Label warning',
                 'content' => '<span class="label label-warning">Warning</span>'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Label danger',
                 'content' => '<span class="label label-danger">Danger</span>'
-            ),
-        );
-        $this->clientOptions['table_class_list'] = array(
-            array('title' => 'None', 'value' => ''),
-            array('title' => 'Striped', 'value' => 'table table-striped'),
-            array('title' => 'Bordered', 'value' => 'table table-bordered'),
-            array('title' => 'Bordered & Striped', 'value' => 'table table-bordered table-striped'),
-            array('title' => 'Hover', 'value' => 'table table-hover'),
-            array('title' => 'Condensed', 'value' => 'table table-condensed'),
-        );
+            ]
+        ];
+        $this->clientOptions['table_class_list'] = [
+            ['title' => 'None', 'value' => ''],
+            ['title' => 'Striped', 'value' => 'table table-striped'],
+            ['title' => 'Bordered', 'value' => 'table table-bordered'],
+            ['title' => 'Bordered & Striped', 'value' => 'table table-bordered table-striped'],
+            ['title' => 'Hover', 'value' => 'table table-hover'],
+            ['title' => 'Condensed', 'value' => 'table table-condensed'],
+        ];
         $this->clientOptions['image_title'] = true;
-        $this->clientOptions['image_class_list'] = array(
-            array('title' => 'None', 'value' => ''),
-            array('title' => 'Rounded', 'value' => 'img-rounded'),
-            array('title' => 'Rounded & Responsive', 'value' => 'img-rounded img-responsive'),
-            array('title' => 'Circle', 'value' => 'img-circle'),
-            array('title' => 'Circle & Responsive', 'value' => 'img-circle img-responsive'),
-            array('title' => 'Thumbnail', 'value' => 'img-thumbnail'),
-            array('title' => 'Thumbnail & Responsive', 'value' => 'img-thumbnail img-responsive'),
-            array('title' => 'Responsive', 'value' => 'img-responsive'),
-        );
+        $this->clientOptions['image_class_list'] = [
+            ['title' => 'None', 'value' => ''],
+            ['title' => 'Rounded', 'value' => 'img-rounded'],
+            ['title' => 'Rounded & Responsive', 'value' => 'img-rounded img-responsive'],
+            ['title' => 'Circle', 'value' => 'img-circle'],
+            ['title' => 'Circle & Responsive', 'value' => 'img-circle img-responsive'],
+            ['title' => 'Thumbnail', 'value' => 'img-thumbnail'],
+            ['title' => 'Thumbnail & Responsive', 'value' => 'img-thumbnail img-responsive'],
+            ['title' => 'Responsive', 'value' => 'img-responsive'],
+        ];
 
 
         if (file_exists(Yii::getAlias("@themeroot/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
 
-            $this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
+            //$this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
             /* $defaultOptions['content_css'] = array(
               Yii::app()->createAbsoluteUrl(Yii::app()->controller->getBaseAssetsUrl() . '/css/bootstrap.min.css'),
               Yii::app()->createAbsoluteUrl(Yii::app()->controller->getAssetsUrl() . '/css/theme.css'),
               ); */
         }
-
-
-
 
 
         $options = Json::encode($this->clientOptions);
