@@ -20,8 +20,5 @@
         "psr-4": {
             "panix\\ext\\tinymce\\": ""
         }
-    },
-    "archive": {
-        "exclude": ["!/*.md"]
     }
 }
