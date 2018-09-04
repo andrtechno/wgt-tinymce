@@ -4,8 +4,8 @@
  *
  * TinyMCE renders a tinyMCE js plugin for WYSIWYG editing.
  *
- * @author CORNER CMS <dev@corner-cms.com>
- * @link http://www.corner-cms.com/
+ * @author PIXELION CMS development team <dev@pixelion.com.ua>
+ * @link http://pixelion.com.ua PIXELION CMS
  */
 
 namespace panix\ext\tinymce;
