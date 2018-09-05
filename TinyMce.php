@@ -79,7 +79,7 @@ print_r($assets);
         $langAssetBundle = TinyMceLangAsset::register($view);
         // @codeCoverageIgnoreStart
         if ($lang !== null && $lang !== 'en') {
-            $langFile = "langs/{$lang}.js";
+            $langFile = "i18n/{$lang}.js";
 
             $langAssetBundle->js[] = $langFile;
             $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
