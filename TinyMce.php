@@ -59,7 +59,7 @@ class TinyMce extends InputWidget
         $view = $this->getView();
 
         $assets = TinyMceAsset::register($view);
-print_r($assets);
+
         $assetsPlugins = Yii::$app->getAssetManager()->publish(Yii::getAlias("@vendor/panix/wgt-tinymce/plugins"));
         // $assetsUrl = $assetsPaths[1];
 
@@ -90,7 +90,7 @@ print_r($assets);
         $this->clientOptions['external_plugins'] = [
             //"responsivefilemanager" => $assetsPlugins[1]."/filemanager/plugin.min.js",
             "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js",
-            "stickytoolbar" => $assetsPlugins[1] . "/stickytoolbar/plugin.js",
+            "stickytoolbar" => $assetsPlugins[1] . "/stickytoolbar/plugin.min.js",
             "pixelion" => $assetsPlugins[1] . "/pixelion/plugin.js",
         ];
 
