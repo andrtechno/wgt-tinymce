@@ -67,11 +67,12 @@ class TinyMce extends InputWidget
         $id = $this->options['id'];
 
         $this->clientOptions['selector'] = "#$id";
+        $this->clientOptions['sticky_offset'] = 51;
         $this->clientOptions['contextmenu'] = "link image inserttable | cell row column deletetable";
         $this->clientOptions['plugins'] = [
-            "autoresize image template advlist autolink lists link charmap print preview anchor",
+            "stickytoolbar autoresize image template advlist autolink lists link charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste pagebreak moxiemanager"
+            "insertdatetime media table contextmenu paste pagebreak moxiemanager pixelion"
         ];
         $this->clientOptions['toolbar'] = "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | pagebreak template";
 
@@ -88,7 +89,9 @@ class TinyMce extends InputWidget
         // $this->clientOptions['filemanager_title'] = "Responsive Filemanager";
         $this->clientOptions['external_plugins'] = [
             //"responsivefilemanager" => $assetsPlugins[1]."/filemanager/plugin.min.js",
-            "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js"
+            "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js",
+            "stickytoolbar" => $assetsPlugins[1] . "/stickytoolbar/plugin.min.js",
+            "pixelion" => $assetsPlugins[1] . "/pixelion/plugin.js",
         ];
 
 
