@@ -58,8 +58,8 @@ class TinyMce extends InputWidget
         $js = [];
         $view = $this->getView();
 
-        TinyMceAsset::register($view);
-
+        $assets = TinyMceAsset::register($view);
+print_r($assets);
         $assetsPlugins = Yii::$app->getAssetManager()->publish(Yii::getAlias("@vendor/panix/wgt-tinymce/plugins"));
         // $assetsUrl = $assetsPaths[1];
 
@@ -76,11 +76,11 @@ class TinyMce extends InputWidget
         ];
         $this->clientOptions['toolbar'] = "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | pagebreak template";
 
-
+        $langAssetBundle = TinyMceLangAsset::register($view);
         // @codeCoverageIgnoreStart
         if ($lang !== null && $lang !== 'en') {
             $langFile = "langs/{$lang}.js";
-            $langAssetBundle = TinyMceLangAsset::register($view);
+
             $langAssetBundle->js[] = $langFile;
             $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
         }
@@ -191,7 +191,7 @@ class TinyMce extends InputWidget
             ['title' => 'Responsive', 'value' => 'img-responsive'],
         ];
 
-
+        $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
         if (file_exists(Yii::getAlias("@themeroot/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
 
             //$this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
