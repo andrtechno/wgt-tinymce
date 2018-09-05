@@ -74,7 +74,7 @@ print_r($assets);
             "searchreplace visualblocks code fullscreen",
             "insertdatetime media table contextmenu paste pagebreak moxiemanager pixelion"
         ];
-        $this->clientOptions['toolbar'] = "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | pagebreak template";
+        $this->clientOptions['toolbar'] = "pixelion | undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | pagebreak template";
 
         $langAssetBundle = TinyMceLangAsset::register($view);
         // @codeCoverageIgnoreStart
