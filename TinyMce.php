@@ -90,7 +90,7 @@ print_r($assets);
         $this->clientOptions['external_plugins'] = [
             //"responsivefilemanager" => $assetsPlugins[1]."/filemanager/plugin.min.js",
             "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js",
-            "stickytoolbar" => $assetsPlugins[1] . "/stickytoolbar/plugin.min.js",
+            "stickytoolbar" => $assetsPlugins[1] . "/stickytoolbar/plugin.js",
             "pixelion" => $assetsPlugins[1] . "/pixelion/plugin.js",
         ];
 
@@ -191,7 +191,7 @@ print_r($assets);
             ['title' => 'Responsive', 'value' => 'img-responsive'],
         ];
 
-        $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
+       // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
         if (file_exists(Yii::getAlias("@themeroot/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
 
             //$this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');

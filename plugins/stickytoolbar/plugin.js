@@ -152,6 +152,7 @@
                             topPart.style.top = offset + 'px';
                             topPart.style.position = 'fixed';
                             topPart.style.width = container.clientWidth + 'px';
+                            topPart.style.backgroundColor = '#fff';
                         }
                     } else {
                         container.style.paddingTop = 0;
