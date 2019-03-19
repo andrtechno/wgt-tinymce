@@ -190,9 +190,9 @@ class TinyMce extends InputWidget
             ['title' => 'Thumbnail & Responsive', 'value' => 'img-thumbnail img-responsive'],
             ['title' => 'Responsive', 'value' => 'img-responsive'],
         ];
-
+$theme = Yii::$app->settings->get('app','theme');
        // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
-        if (file_exists(Yii::getAlias("@themeroot/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
+        if (file_exists(Yii::getAlias("@frontend/themes/{$theme}/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
 
             //$this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
             /* $defaultOptions['content_css'] = array(
