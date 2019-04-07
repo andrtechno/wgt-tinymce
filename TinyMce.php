@@ -72,9 +72,9 @@ class TinyMce extends InputWidget
         $this->clientOptions['plugins'] = [
             "stickytoolbar autoresize image template advlist autolink lists link charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste pagebreak moxiemanager pixelion"
+            "insertdatetime media table contextmenu paste pagebreak moxiemanager pixelion responsivefilemanager"
         ];
-        $this->clientOptions['toolbar'] = "pixelion | undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | pagebreak template";
+        $this->clientOptions['toolbar'] = "responsivefilemanager | pixelion | undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | pagebreak template";
 
         $langAssetBundle = TinyMceLangAsset::register($view);
         // @codeCoverageIgnoreStart
@@ -85,30 +85,37 @@ class TinyMce extends InputWidget
             $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
         }
 
-        // $this->clientOptions['external_filemanager_path'] = "/filemanager/";
-        // $this->clientOptions['filemanager_title'] = "Responsive Filemanager";
+
+        $this->clientOptions['external_filemanager_path'] = $assetsPlugins[1] . '/responsivefilemanager/filemanager/';
+        $this->clientOptions['path_from_filemanager'] = '/uploads/';
+        $this->clientOptions['filemanager_access_key'] = 'test';
+        $this->clientOptions['filemanager_title'] = "Responsive Filemanager";
         $this->clientOptions['external_plugins'] = [
-            //"responsivefilemanager" => $assetsPlugins[1]."/filemanager/plugin.min.js",
+            "responsivefilemanager" => $assetsPlugins[1] . "/responsivefilemanager/plugin.min.js",
             "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js",
             "stickytoolbar" => $assetsPlugins[1] . "/stickytoolbar/plugin.min.js",
             "pixelion" => $assetsPlugins[1] . "/pixelion/plugin.js",
         ];
 
 
-        //$moxiemanager_rootpath = Yii::getAlias('@web/uploads/content');
-        $moxiemanager_rootpath = Yii::getAlias('@webroot/uploads/content');
+        // $moxiemanager_rootpath = Yii::getAlias('@uploads');
+        $moxiemanager_rootpath = '/frontend/web/uploads';
+
         if (isset(Yii::$app->controller->module)) {
             if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
                 // $moxiemanager_rootpath = Yii::$app->getModule(Yii::$app->controller->module->id)->uploadPath;
+
             }
         }
+
         //die($moxiemanager_rootpath);
 
         //MoxieManager options
-        $this->clientOptions['moxiemanager_rootpath'] = $moxiemanager_rootpath;
-        $this->clientOptions['moxiemanager_language'] = Yii::$app->language;
-        $this->clientOptions['moxiemanager_skin'] = 'custom';
-        $this->clientOptions['moxiemanager_title'] = 'FileManager CMS';
+        /* $this->clientOptions['moxiemanager_rootpath'] = $moxiemanager_rootpath;
+         $this->clientOptions['moxiemanager_path'] = '/frontend/web/uploads';
+         $this->clientOptions['moxiemanager_language'] = Yii::$app->language;
+         $this->clientOptions['moxiemanager_skin'] = 'custom';
+         $this->clientOptions['moxiemanager_title'] = 'FileManager CMS';*/
 
 
 //        $this->clientOptions['moxiemanager_image_settings'] = [
@@ -125,9 +132,10 @@ class TinyMce extends InputWidget
         $this->clientOptions['branding'] = false;
         //$this->clientOptions['paste_enable_default_filters'] = false;
         //$this->clientOptions['paste_filter_drop'] = false;
-        //$this->clientOptions['relative_urls'] = false;
+        $this->clientOptions['relative_urls'] = false;
         //$this->clientOptions['remove_script_host'] = true;
-        //$this->clientOptions['document_base_url'] = '/';
+        $this->clientOptions['document_base_url'] = '/';
+        $this->clientOptions['image_prepend_url'] = "/uploads";
 
         $this->clientOptions['templates'] = [
             [
@@ -190,8 +198,8 @@ class TinyMce extends InputWidget
             ['title' => 'Thumbnail & Responsive', 'value' => 'img-thumbnail img-responsive'],
             ['title' => 'Responsive', 'value' => 'img-responsive'],
         ];
-$theme = Yii::$app->settings->get('app','theme');
-       // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
+        $theme = Yii::$app->settings->get('app', 'theme');
+        // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
         if (file_exists(Yii::getAlias("@frontend/themes/{$theme}/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
 
             //$this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
