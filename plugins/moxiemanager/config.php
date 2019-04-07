@@ -95,7 +95,7 @@ $moxieManagerConfig['basicauthenticator.users'] = array(
         "username" => "user",
         "password" => "pwd",
         // "email" => "a1@starlink.ru",
-        "email" => "dev@corner-cms.com",
+        "email" => "dev@pixelion.com.ua",
         "groups" => array("administrator"))
 );
 
