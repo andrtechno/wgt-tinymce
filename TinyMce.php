@@ -72,9 +72,9 @@ class TinyMce extends InputWidget
         $this->clientOptions['plugins'] = [
             "stickytoolbar autoresize image template advlist autolink lists link charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste pagebreak moxiemanager pixelion responsivefilemanager"
+            "insertdatetime media table contextmenu paste pagebreak pixelion responsivefilemanager moxiemanager"
         ];
-        $this->clientOptions['toolbar'] = "responsivefilemanager | pixelion | undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | pagebreak template";
+        $this->clientOptions['toolbar'] = "pixelion | undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | pagebreak template";
 
         $langAssetBundle = TinyMceLangAsset::register($view);
         // @codeCoverageIgnoreStart
@@ -85,21 +85,20 @@ class TinyMce extends InputWidget
             $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
         }
 
-
-        $this->clientOptions['external_filemanager_path'] = $assetsPlugins[1] . '/responsivefilemanager/filemanager/';
-        $this->clientOptions['path_from_filemanager'] = '/uploads/';
-        $this->clientOptions['filemanager_access_key'] = 'test';
-        $this->clientOptions['filemanager_title'] = "Responsive Filemanager";
+        $this->clientOptions['image_advtab'] = true;
+        //responsivefilemanager
+        //$this->clientOptions['filemanager_crossdomain'] = true;
+        //$this->clientOptions['external_filemanager_path'] = $assetsPlugins[1] . '/responsivefilemanager/filemanager/';
+        //$this->clientOptions['path_from_filemanager'] = '/uploads/';
+        //$this->clientOptions['filemanager_access_key'] = 'test';
+        //$this->clientOptions['filemanager_title'] = "Responsive Filemanager";
         $this->clientOptions['external_plugins'] = [
-            "responsivefilemanager" => $assetsPlugins[1] . "/responsivefilemanager/plugin.min.js",
-            "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js",
+            //"responsivefilemanager" => $assetsPlugins[1] . "/responsivefilemanager/plugin.min.js",
+             "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js",
             "stickytoolbar" => $assetsPlugins[1] . "/stickytoolbar/plugin.min.js",
             "pixelion" => $assetsPlugins[1] . "/pixelion/plugin.js",
         ];
 
-
-        // $moxiemanager_rootpath = Yii::getAlias('@uploads');
-        $moxiemanager_rootpath = '/frontend/web/uploads';
 
         if (isset(Yii::$app->controller->module)) {
             if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
@@ -108,14 +107,13 @@ class TinyMce extends InputWidget
             }
         }
 
-        //die($moxiemanager_rootpath);
 
         //MoxieManager options
-        /* $this->clientOptions['moxiemanager_rootpath'] = $moxiemanager_rootpath;
-         $this->clientOptions['moxiemanager_path'] = '/frontend/web/uploads';
+         $this->clientOptions['moxiemanager_rootpath'] = '/';
+         $this->clientOptions['moxiemanager_path'] = '/';
          $this->clientOptions['moxiemanager_language'] = Yii::$app->language;
          $this->clientOptions['moxiemanager_skin'] = 'custom';
-         $this->clientOptions['moxiemanager_title'] = 'FileManager CMS';*/
+         $this->clientOptions['moxiemanager_title'] = 'FileManager CMS';
 
 
 //        $this->clientOptions['moxiemanager_image_settings'] = [
@@ -126,7 +124,7 @@ class TinyMce extends InputWidget
 //        ];
 
 
-        //$this->clientOptions['image_advtab'] = true;
+
         $this->clientOptions['resize'] = true;
         $this->clientOptions['language'] = $lang;
         $this->clientOptions['branding'] = false;
@@ -135,7 +133,7 @@ class TinyMce extends InputWidget
         $this->clientOptions['relative_urls'] = false;
         //$this->clientOptions['remove_script_host'] = true;
         $this->clientOptions['document_base_url'] = '/';
-        $this->clientOptions['image_prepend_url'] = "/uploads";
+        //$this->clientOptions['image_prepend_url'] = "/uploads";
 
         $this->clientOptions['templates'] = [
             [
