@@ -10,6 +10,7 @@
 
 namespace panix\ext\tinymce;
 
+
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -94,7 +95,7 @@ class TinyMce extends InputWidget
         //$this->clientOptions['filemanager_title'] = "Responsive Filemanager";
         $this->clientOptions['external_plugins'] = [
             //"responsivefilemanager" => $assetsPlugins[1] . "/responsivefilemanager/plugin.min.js",
-             "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js",
+            "moxiemanager" => $assetsPlugins[1] . "/moxiemanager/plugin.min.js",
             "stickytoolbar" => $assetsPlugins[1] . "/stickytoolbar/plugin.min.js",
             "pixelion" => $assetsPlugins[1] . "/pixelion/plugin.js",
         ];
@@ -109,11 +110,11 @@ class TinyMce extends InputWidget
 
 
         //MoxieManager options
-         $this->clientOptions['moxiemanager_rootpath'] = '/';
-         $this->clientOptions['moxiemanager_path'] = '/';
-         $this->clientOptions['moxiemanager_language'] = Yii::$app->language;
-         $this->clientOptions['moxiemanager_skin'] = 'custom';
-         $this->clientOptions['moxiemanager_title'] = 'FileManager CMS';
+        $this->clientOptions['moxiemanager_rootpath'] = '/';
+        $this->clientOptions['moxiemanager_path'] = '/';
+        $this->clientOptions['moxiemanager_language'] = Yii::$app->language;
+        $this->clientOptions['moxiemanager_skin'] = 'custom';
+        $this->clientOptions['moxiemanager_title'] = 'FileManager CMS';
 
 
 //        $this->clientOptions['moxiemanager_image_settings'] = [
@@ -122,7 +123,6 @@ class TinyMce extends InputWidget
 //            'moxiemanager_rootpath' => '/testfiles/testfolder',
 //            'moxiemanager_view' => 'thumbs',
 //        ];
-
 
 
         $this->clientOptions['resize'] = true;
@@ -153,28 +153,28 @@ class TinyMce extends InputWidget
                 'content' => '<div class="alert alert-warning" role="alert">My alert content</div>'
             ],
             [
-                'title' => 'Label default',
-                'content' => '<span class="label label-default">Default</span>'
+                'title' => 'Badge secondary',
+                'content' => '<span class="badge badge-secondary">Secondary</span>'
             ],
             [
-                'title' => 'Label primary',
-                'content' => '<span class="label label-primary">Primary</span>'
+                'title' => 'Badge primary',
+                'content' => '<span class="badge badge-primary">Primary</span>'
             ],
             [
-                'title' => 'Label success',
-                'content' => '<span class="label label-success">Success</span>'
+                'title' => 'Badge success',
+                'content' => '<span class="badge badge-success">Success</span>'
             ],
             [
-                'title' => 'Label info',
-                'content' => '<span class="label label-info">Info</span>'
+                'title' => 'Badge info',
+                'content' => '<span class="badge badge-info">Info</span>'
             ],
             [
-                'title' => 'Label warning',
-                'content' => '<span class="label label-warning">Warning</span>'
+                'title' => 'Badge warning',
+                'content' => '<span class="badge badge-warning">Warning</span>'
             ],
             [
-                'title' => 'Label danger',
-                'content' => '<span class="label label-danger">Danger</span>'
+                'title' => 'Badge danger',
+                'content' => '<span class="badge badge-danger">Danger</span>'
             ]
         ];
         $this->clientOptions['table_class_list'] = [
@@ -207,7 +207,15 @@ class TinyMce extends InputWidget
               ); */
         }
 
-
+        $class = "app\\frontend\\web\\themes\\{$theme}\\assets\\ThemeAsset";
+        $bootstrapAsset = \yii\bootstrap4\BootstrapAsset::register($view);
+       // print_r($bootstrapAsset);
+       // $frontendAsset = (new $class);
+      //  print_r($frontendAsset);
+        $this->clientOptions['content_css'] = [
+            $bootstrapAsset->baseUrl . '/css/bootstrap.min.css',
+          // $frontendAsset->baseUrl . '/css/style.css',
+        ];
         $options = Json::encode($this->clientOptions);
 
         $js[] = "tinymce.init($options);";
