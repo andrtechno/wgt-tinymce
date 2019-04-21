@@ -15,6 +15,6 @@ class TinyMceAsset extends AssetBundle
     public $sourcePath = '@vendor/tinymce/tinymce';
 
     public $js = [
-        'tinymce.js'
+        'tinymce.min.js'
     ];
 }

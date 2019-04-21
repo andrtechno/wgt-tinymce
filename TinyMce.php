@@ -73,7 +73,7 @@ class TinyMce extends InputWidget
         $this->clientOptions['plugins'] = [
             "stickytoolbar autoresize image template advlist autolink lists link charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste pagebreak pixelion responsivefilemanager moxiemanager"
+            "insertdatetime media table contextmenu paste pagebreak pixelion moxiemanager"//responsivefilemanager
         ];
         $this->clientOptions['toolbar'] = "pixelion | undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | pagebreak template";
 
@@ -198,7 +198,7 @@ class TinyMce extends InputWidget
         ];
         $theme = Yii::$app->settings->get('app', 'theme');
         // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
-        if (file_exists(Yii::getAlias("@frontend/themes/{$theme}/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
+        if (file_exists(Yii::getAlias("@frontend/web/themes/{$theme}/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
 
             //$this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
             /* $defaultOptions['content_css'] = array(
