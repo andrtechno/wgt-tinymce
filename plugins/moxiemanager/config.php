@@ -12,7 +12,7 @@ $moxieManagerConfig['general.temp_dir'] = '';
 $moxieManagerConfig['general.allow_override'] = 'hidden_tools,disabled_tools';
 
 // Filesystem
-$moxieManagerConfig['filesystem.rootpath'] = $_SERVER["DOCUMENT_ROOT"] . "/frontend/web/uploads";
+$moxieManagerConfig['filesystem.rootpath'] = $_SERVER["DOCUMENT_ROOT"] . "/web/uploads";
 $moxieManagerConfig['filesystem.include_directory_pattern'] = '';
 $moxieManagerConfig['filesystem.exclude_directory_pattern'] = '/^thumbs$|^upgrade$|^language$|^users$/i';
 $moxieManagerConfig['filesystem.include_file_pattern'] = '';
