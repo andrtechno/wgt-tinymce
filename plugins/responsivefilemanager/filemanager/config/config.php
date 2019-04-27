@@ -83,7 +83,7 @@ $config = array(
 	| with final /
 	|
 	*/
-    'current_path' => '../../../../../frontend/web/uploads/',
+    'current_path' => '../../../../../web/uploads/',
 
 
 	/*

@@ -198,7 +198,7 @@ class TinyMce extends InputWidget
         ];
         $theme = Yii::$app->settings->get('app', 'theme');
         // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
-        if (file_exists(Yii::getAlias("@frontend/web/themes/{$theme}/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
+        if (file_exists(Yii::getAlias("@app/web/themes/{$theme}/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
 
             //$this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
             /* $defaultOptions['content_css'] = array(
@@ -207,7 +207,7 @@ class TinyMce extends InputWidget
               ); */
         }
 
-        $class = "app\\frontend\\web\\themes\\{$theme}\\assets\\ThemeAsset";
+        $class = "app\\web\\themes\\{$theme}\\assets\\ThemeAsset";
         $bootstrapAsset = \yii\bootstrap4\BootstrapAsset::register($view);
        // print_r($bootstrapAsset);
        // $frontendAsset = (new $class);
