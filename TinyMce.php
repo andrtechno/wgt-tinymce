@@ -114,15 +114,15 @@ class TinyMce extends InputWidget
         $this->clientOptions['moxiemanager_path'] = '/';
         $this->clientOptions['moxiemanager_language'] = Yii::$app->language;
         $this->clientOptions['moxiemanager_skin'] = 'custom';
-        $this->clientOptions['moxiemanager_title'] = 'FileManager CMS';
+        $this->clientOptions['moxiemanager_title'] = 'FileManager';
 
 
-//        $this->clientOptions['moxiemanager_image_settings'] = [
+        $this->clientOptions['moxiemanager_image_settings'] = [
 //            'moxiemanager_title' => 'Images',
 //            'moxiemanager_extensions' => 'jpg,png,gif',
 //            'moxiemanager_rootpath' => '/testfiles/testfolder',
 //            'moxiemanager_view' => 'thumbs',
-//        ];
+        ];
 
 
         $this->clientOptions['resize'] = true;
@@ -133,7 +133,7 @@ class TinyMce extends InputWidget
         $this->clientOptions['relative_urls'] = false;
         //$this->clientOptions['remove_script_host'] = true;
         $this->clientOptions['document_base_url'] = '/';
-        //$this->clientOptions['image_prepend_url'] = "/uploads";
+        $this->clientOptions['image_prepend_url'] = '/';
 
         $this->clientOptions['templates'] = [
             [
@@ -189,15 +189,16 @@ class TinyMce extends InputWidget
         $this->clientOptions['image_class_list'] = [
             ['title' => 'None', 'value' => ''],
             ['title' => 'Rounded', 'value' => 'img-rounded'],
-            ['title' => 'Rounded & Responsive', 'value' => 'img-rounded img-responsive'],
+            ['title' => 'Rounded & Responsive', 'value' => 'img-rounded img-responsive img-fluid'],
             ['title' => 'Circle', 'value' => 'img-circle'],
-            ['title' => 'Circle & Responsive', 'value' => 'img-circle img-responsive'],
+            ['title' => 'Circle & Responsive', 'value' => 'img-circle img-responsive img-fluid'],
             ['title' => 'Thumbnail', 'value' => 'img-thumbnail'],
-            ['title' => 'Thumbnail & Responsive', 'value' => 'img-thumbnail img-responsive'],
-            ['title' => 'Responsive', 'value' => 'img-responsive'],
+            ['title' => 'Thumbnail & Responsive', 'value' => 'img-thumbnail img-responsive img-fluid'],
+            ['title' => 'Responsive', 'value' => 'img-responsive img-fluid'],
         ];
         $theme = Yii::$app->settings->get('app', 'theme');
         // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
+
         if (file_exists(Yii::getAlias("@app/web/themes/{$theme}/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
 
             //$this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
