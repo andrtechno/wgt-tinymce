@@ -121,7 +121,7 @@ class MOXMAN_Media_ImageAlter {
 	/**
 	 * Saves the image to the specified file.
 	 *
-	 * @param stirng $file File instance to save image to.
+	 * @param string $file File instance to save image to.
 	 * @param int $quality Image quality for jpegs.
 	 */
 	public function saveToFile(MOXMAN_Vfs_IFile $file, $quality = 90) {

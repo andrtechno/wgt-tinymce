@@ -129,7 +129,7 @@ class TinyMce extends InputWidget
         $this->clientOptions['language'] = $lang;
         $this->clientOptions['branding'] = false;
         //$this->clientOptions['paste_enable_default_filters'] = false;
-        //$this->clientOptions['paste_filter_drop'] = false;
+        $this->clientOptions['paste_filter_drop'] = false;
         $this->clientOptions['relative_urls'] = false;
         //$this->clientOptions['remove_script_host'] = true;
         $this->clientOptions['document_base_url'] = '/';
