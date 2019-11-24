@@ -157,7 +157,7 @@ class TinyMce extends InputWidget
             "moxiemanager" => $this->assetsPlugins[1] . "/moxiemanager/plugin.min.js",
             "stickytoolbar" => $this->assetsPlugins[1] . "/stickytoolbar/plugin.min.js",
             "pixelion" => $this->assetsPlugins[1] . "/pixelion/plugin.js",
-            "mybbcode" => $this->assetsPlugins[1] . "/mybbcode/plugin.js",
+            //"mybbcode" => $this->assetsPlugins[1] . "/mybbcode/plugin.js",
         ];
         $view = $this->getView();
         $langAssetBundle = TinyMceLangAsset::register($view);
@@ -210,24 +210,22 @@ class TinyMce extends InputWidget
         $theme = Yii::$app->settings->get('app', 'theme');
         // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
 
-        if (file_exists(Yii::getAlias("@app/web/themes/{$theme}/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
 
-            //$this->clientOptions['content_css'] = Yii::$app->getUrlManager()->createAbsoluteUrl('/css/tinymce.css');
-            /* $defaultOptions['content_css'] = array(
-              Yii::app()->createAbsoluteUrl(Yii::app()->controller->getBaseAssetsUrl() . '/css/bootstrap.min.css'),
-              Yii::app()->createAbsoluteUrl(Yii::app()->controller->getAssetsUrl() . '/css/theme.css'),
-              ); */
-        }
+        $class = "\app\web\themes\{$theme}\assets\ThemeAsset";
+        $themeAsset =Yii::createObject("\\app\\web\\themes\\{$theme}\\ThemeAsset");
 
-        $class = "app\\web\\themes\\{$theme}\\assets\\ThemeAsset";
+
+        $themeAssetUrl = (new \yii\web\AssetManager)->publish($themeAsset->sourcePath);
+        // $bootstrapAssetUrl = (new \yii\web\AssetManager)->publish(Yii::createObject("\yii\bootstrap4\BootstrapAsset")->sourcePath);
+
+
         $bootstrapAsset = \yii\bootstrap4\BootstrapAsset::register($view);
-        // print_r($bootstrapAsset);
-        // $frontendAsset = (new $class);
-        //  print_r($frontendAsset);
-        $this->clientOptions['content_css'] = [
-            $bootstrapAsset->baseUrl . '/css/bootstrap.min.css',
-            // $frontendAsset->baseUrl . '/css/style.css',
-        ];
+
+        $this->clientOptions['content_css'][] = $bootstrapAsset->baseUrl . '/css/bootstrap.min.css';
+        echo Yii::$app->controller->assetUrl.'/css/tinymce.css';
+        if (file_exists(Yii::getAlias("@web_theme/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
+            $this->clientOptions['content_css'][] = $themeAssetUrl[1].'/css/tinymce.css';
+        }
         $options = Json::encode($this->clientOptions);
 
         $js[] = "tinymce.init($options);";

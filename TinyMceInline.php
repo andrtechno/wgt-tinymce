@@ -11,11 +11,10 @@
 namespace panix\ext\tinymce;
 
 use Yii;
-use yii\helpers\Html;
 use yii\helpers\Json;
-use yii\widgets\InputWidget;
+use panix\engine\data\Widget;
 
-class TinyMceInline extends \panix\engine\data\Widget {
+class TinyMceInline extends Widget {
 
     /**
      * @var string the language to use. Defaults to null (en).
@@ -34,11 +33,12 @@ class TinyMceInline extends \panix\engine\data\Widget {
      * @see https://github.com/2amigos/yii2-tinymce-widget/issues/7
      */
     public $triggerSaveOnBeforeValidateForm = true;
-
+    protected $assetsPlugins;
     /**
      * @inheritdoc
      */
     public function run() {
+        $this->assetsPlugins = Yii::$app->getAssetManager()->publish(Yii::getAlias("@vendor/panix/wgt-tinymce/plugins"));
 
         $this->registerClientScript();
     }
@@ -61,6 +61,7 @@ class TinyMceInline extends \panix\engine\data\Widget {
         $view = $this->getView();
 
         TinyMceAsset::register($view);
+        $langAssetBundle = TinyMceLangAsset::register($view);
         $this->clientOptions['selector'] = ".edit_mode_text";
         $this->clientOptions['inline']=true;
 
@@ -68,50 +69,44 @@ class TinyMceInline extends \panix\engine\data\Widget {
         $this->clientOptions['plugins'] = [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste pagebreak moxiemanager"
+            "insertdatetime media table contextmenu paste pagebreak" // moxiemanager
         ];
         $this->clientOptions['toolbar'] = "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image";
-        //$this->clientOptions['moxiemanager_rootpath'] = $moxiemanager_rootpath;
-        $this->clientOptions['moxiemanager_rootpath'] = $moxiemanager_rootpath;
-        $this->clientOptions['moxiemanager_language'] = $lang;
-        $this->clientOptions['moxiemanager_skin'] = 'custom';
+
+
+        //MoxieManager options
+        $defaultClientOptions['moxiemanager_rootpath'] = '/';
+        $defaultClientOptions['moxiemanager_path'] = '/';
+        $defaultClientOptions['moxiemanager_language'] = Yii::$app->language;
+        $defaultClientOptions['moxiemanager_skin'] = 'custom';
+        $defaultClientOptions['moxiemanager_title'] = 'FileManager';
+        $defaultClientOptions['moxiemanager_image_settings'] = [
+//            'moxiemanager_title' => 'Images',
+//            'moxiemanager_extensions' => 'jpg,png,gif',
+//            'moxiemanager_rootpath' => '/testfiles/testfolder',
+//            'moxiemanager_view' => 'thumbs',
+        ];
+
+
        // $this->clientOptions['relative_urls'] = false;
        // $this->clientOptions['document_base_url'] = '/';
         // @codeCoverageIgnoreStart
         if ($lang !== null && $lang !== 'en') {
-            $langFile = "langs/{$lang}.js";
-            $langAssetBundle = TinyMceLangAsset::register($view);
+            $langFile = "i18n/{$lang}.js";
+
             $langAssetBundle->js[] = $langFile;
             $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
         }
 
         $this->clientOptions['language'] = $lang;
         $this->clientOptions['branding'] = false;
-
+        $defaultClientOptions['external_plugins'] = [
+            //"moxiemanager" => $this->assetsPlugins[1] . "/moxiemanager/plugin.min.js",
+            "pixelion" => $this->assetsPlugins[1] . "/pixelion/plugin.js",
+        ];
 
         $options = Json::encode($this->clientOptions);
-        /*
-          tinymce.init({
-          selector: '.edit_mode_title',
-          inline: true,
-          toolbar: 'undo redo',
-          menubar: false
-          });
 
-          tinymce.init({
-          selector: '.edit_mode_text',
-          inline: true,
-          plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table contextmenu paste moxiemanager'
-          ],
-          toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-          content_css: [
-          '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-          '//www.tinymce.com/css/codepen.min.css']
-          });
-         */
         $js[] = "
             tinymce.init($options);
  
