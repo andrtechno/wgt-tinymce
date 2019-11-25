@@ -12,8 +12,13 @@ namespace panix\ext\tinymce;
 
 use Yii;
 use yii\helpers\Json;
+use yii\web\JsExpression;
 use panix\engine\data\Widget;
 
+/**
+ * Class TinyMceInline
+ * @package panix\ext\tinymce
+ */
 class TinyMceInline extends Widget {
 
     /**
@@ -67,11 +72,11 @@ class TinyMceInline extends Widget {
 
 //die($moxiemanager_rootpath);
         $this->clientOptions['plugins'] = [
-            "advlist autolink lists link image charmap print preview anchor",
+            "save advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
             "insertdatetime media table contextmenu paste pagebreak" // moxiemanager
         ];
-        $this->clientOptions['toolbar'] = "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image";
+        $this->clientOptions['toolbar'] = "save undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image";
 
 
         //MoxieManager options
@@ -104,7 +109,23 @@ class TinyMceInline extends Widget {
             //"moxiemanager" => $this->assetsPlugins[1] . "/moxiemanager/plugin.min.js",
             "pixelion" => $this->assetsPlugins[1] . "/pixelion/plugin.js",
         ];
-
+        $this->clientOptions['save_onsavecallback'] = new JsExpression("function () {
+        //console.log('save_onsavecallback',this, this.formElement);
+            var form = this.formElement;
+            $.ajax({
+                url:form.action,
+                type:'POST',
+                dataType:'json',
+                data:$(form).serialize()+'&ajax=true',
+                success:function(data){
+                    if(data.success){
+                        common.notify(data.message,'success');
+                    }else{
+                        common.notify('Error','error');
+                    }
+                }
+            });
+        }");
         $options = Json::encode($this->clientOptions);
 
         $js[] = "
