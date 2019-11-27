@@ -222,7 +222,6 @@ class TinyMce extends InputWidget
         $bootstrapAsset = \yii\bootstrap4\BootstrapAsset::register($view);
 
         $this->clientOptions['content_css'][] = $bootstrapAsset->baseUrl . '/css/bootstrap.min.css';
-        echo Yii::$app->controller->assetUrl.'/css/tinymce.css';
         if (file_exists(Yii::getAlias("@web_theme/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
             $this->clientOptions['content_css'][] = $themeAssetUrl[1].'/css/tinymce.css';
         }
