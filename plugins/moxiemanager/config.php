@@ -4,7 +4,7 @@
 $moxieManagerConfig['general.license'] = 'YOUR-LICENSE-KEY';
 $moxieManagerConfig['general.hidden_tools'] = '';
 $moxieManagerConfig['general.disabled_tools'] = '';
-$moxieManagerConfig['general.plugins'] = 'Favorites,History,Uploaded,AutoRename';
+$moxieManagerConfig['general.plugins'] = 'Favorites,AutoRename';
 $moxieManagerConfig['general.demo'] = false;
 $moxieManagerConfig['general.debug'] = false;
 $moxieManagerConfig['general.language'] = 'ru';
@@ -141,7 +141,7 @@ $moxieManagerConfig['autoformat.delete_format_images'] = true;
 // AutoRename, remember to include it in your plugin config.
 $moxieManagerConfig['autorename.enabled'] = true;
 $moxieManagerConfig['autorename.spacechar'] = "_";
-$moxieManagerConfig['autorename.lowercase'] = false;
+$moxieManagerConfig['autorename.lowercase'] = true;
 
 // GoogleDrive
 $moxieManagerConfig['googledrive.client_id'] = '';
