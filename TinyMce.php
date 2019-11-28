@@ -37,11 +37,11 @@ class TinyMce extends InputWidget
      */
     public $triggerSaveOnBeforeValidateForm = true;
     protected $assetsPlugins;
+
     public function init()
     {
         parent::init();
         $this->assetsPlugins = Yii::$app->getAssetManager()->publish(Yii::getAlias("@vendor/panix/wgt-tinymce/plugins"));
-
 
 
         $defaultClientOptions = [];
@@ -60,22 +60,20 @@ class TinyMce extends InputWidget
         $defaultClientOptions['image_advtab'] = true;
 
         //MoxieManager options
-        $defaultClientOptions['moxiemanager_rootpath'] = '/';
+        //$defaultClientOptions['moxiemanager_rootpath'] = '/';
+        $defaultClientOptions['moxiemanager_rootpath'] = '/uploads/content';
         $defaultClientOptions['moxiemanager_path'] = '/';
         $defaultClientOptions['moxiemanager_language'] = Yii::$app->language;
         $defaultClientOptions['moxiemanager_skin'] = 'custom';
         $defaultClientOptions['moxiemanager_title'] = 'FileManager';
 
 
-        $defaultClientOptions['moxiemanager_image_settings'] = [
-
-
-
-//            'moxiemanager_title' => 'Images',
-//            'moxiemanager_extensions' => 'jpg,png,gif',
-//            'moxiemanager_rootpath' => '/testfiles/testfolder',
-//            'moxiemanager_view' => 'thumbs',
-        ];
+        /*$defaultClientOptions['moxiemanager_image_settings'] = [
+            'moxiemanager_title' => 'Images',
+            'moxiemanager_extensions' => 'jpg,png,gif',
+            'moxiemanager_rootpath' => '/testfiles/testfolder',
+            'moxiemanager_view' => 'thumbs',
+        ];*/
 
 
         $defaultClientOptions['resize'] = true;
@@ -174,7 +172,6 @@ class TinyMce extends InputWidget
         }
 
 
-
         $this->clientOptions = ArrayHelper::merge($defaultClientOptions, $this->clientOptions);
 
     }
@@ -204,7 +201,6 @@ class TinyMce extends InputWidget
         TinyMceAsset::register($view);
 
 
-
         if (isset(Yii::$app->controller->module)) {
             if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
                 // $moxiemanager_rootpath = Yii::$app->getModule(Yii::$app->controller->module->id)->uploadPath;
@@ -217,7 +213,7 @@ class TinyMce extends InputWidget
 
 
         $class = "\app\web\themes\{$theme}\assets\ThemeAsset";
-        $themeAsset =Yii::createObject("\\app\\web\\themes\\{$theme}\\ThemeAsset");
+        $themeAsset = Yii::createObject("\\app\\web\\themes\\{$theme}\\ThemeAsset");
 
 
         $themeAssetUrl = (new \yii\web\AssetManager)->publish($themeAsset->sourcePath);
@@ -228,7 +224,7 @@ class TinyMce extends InputWidget
 
         $this->clientOptions['content_css'][] = $bootstrapAsset->baseUrl . '/css/bootstrap.min.css';
         if (file_exists(Yii::getAlias("@web_theme/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
-            $this->clientOptions['content_css'][] = $themeAssetUrl[1].'/css/tinymce.css';
+            $this->clientOptions['content_css'][] = $themeAssetUrl[1] . '/css/tinymce.css';
         }
         $options = Json::encode($this->clientOptions);
 

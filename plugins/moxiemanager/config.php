@@ -4,7 +4,7 @@
 $moxieManagerConfig['general.license'] = 'YOUR-LICENSE-KEY';
 $moxieManagerConfig['general.hidden_tools'] = '';
 $moxieManagerConfig['general.disabled_tools'] = '';
-$moxieManagerConfig['general.plugins'] = 'Favorites';
+$moxieManagerConfig['general.plugins'] = 'Favorites,History,Uploaded,AutoRename';
 $moxieManagerConfig['general.demo'] = false;
 $moxieManagerConfig['general.debug'] = false;
 $moxieManagerConfig['general.language'] = 'ru';
@@ -77,7 +77,7 @@ $moxieManagerConfig['download.extensions'] = '*';
 $moxieManagerConfig['download.allow_override'] = '*';
 
 // Thumbnail
-$moxieManagerConfig['thumbnail.enabled'] = true;
+$moxieManagerConfig['thumbnail.enabled'] = false;
 $moxieManagerConfig['thumbnail.auto_generate'] = true;
 $moxieManagerConfig['thumbnail.use_exif'] = true;
 $moxieManagerConfig['thumbnail.width'] = 150;
@@ -139,7 +139,7 @@ $moxieManagerConfig['autoformat.jpeg_quality'] = 100;
 $moxieManagerConfig['autoformat.delete_format_images'] = true;
 
 // AutoRename, remember to include it in your plugin config.
-$moxieManagerConfig['autorename.enabled'] = false;
+$moxieManagerConfig['autorename.enabled'] = true;
 $moxieManagerConfig['autorename.spacechar'] = "_";
 $moxieManagerConfig['autorename.lowercase'] = false;
 
