@@ -65,7 +65,12 @@ class TinyMce extends InputWidget
         $defaultClientOptions['moxiemanager_language'] = Yii::$app->language;
         $defaultClientOptions['moxiemanager_skin'] = 'custom';
         $defaultClientOptions['moxiemanager_title'] = 'FileManager';
+
+
         $defaultClientOptions['moxiemanager_image_settings'] = [
+
+
+
 //            'moxiemanager_title' => 'Images',
 //            'moxiemanager_extensions' => 'jpg,png,gif',
 //            'moxiemanager_rootpath' => '/testfiles/testfolder',

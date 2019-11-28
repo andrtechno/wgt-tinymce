@@ -40,12 +40,12 @@ $moxieManagerConfig['createdoc.allow_override'] = '*';
 $moxieManagerConfig['upload.include_file_pattern'] = '';
 $moxieManagerConfig['upload.exclude_file_pattern'] = '';
 $moxieManagerConfig['upload.extensions'] = '*';
-$moxieManagerConfig['upload.maxsize'] = '20MB';
+$moxieManagerConfig['upload.maxsize'] = '10MB';
 $moxieManagerConfig['upload.overwrite'] = false;
-$moxieManagerConfig['upload.autoresize'] = false;
+$moxieManagerConfig['upload.autoresize'] = true;
 $moxieManagerConfig['upload.autoresize_jpeg_quality'] = 100;
-$moxieManagerConfig['upload.max_width'] = 800;
-$moxieManagerConfig['upload.max_height'] = 600;
+$moxieManagerConfig['upload.max_width'] = 1200;
+$moxieManagerConfig['upload.max_height'] = 1200;
 $moxieManagerConfig['upload.chunk_size'] = '5mb';
 $moxieManagerConfig['upload.allow_override'] = '*';
 
