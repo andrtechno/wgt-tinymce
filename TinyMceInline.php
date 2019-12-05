@@ -107,7 +107,7 @@ class TinyMceInline extends Widget {
         $this->clientOptions['branding'] = false;
         $defaultClientOptions['external_plugins'] = [
             //"moxiemanager" => $this->assetsPlugins[1] . "/moxiemanager/plugin.min.js",
-            "pixelion" => $this->assetsPlugins[1] . "/pixelion/plugin.js",
+            //"pixelion" => $this->assetsPlugins[1] . "/pixelion/plugin.js",
         ];
         $this->clientOptions['save_onsavecallback'] = new JsExpression("function () {
         //console.log('save_onsavecallback',this, this.formElement);
@@ -134,7 +134,8 @@ class TinyMceInline extends Widget {
 tinymce.init({
   selector: '.edit_mode_title',
   inline: true,
-  toolbar: 'undo redo',
+  plugins: 'save',
+  toolbar: 'save undo redo',
   menubar: false
 });
 
