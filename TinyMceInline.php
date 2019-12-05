@@ -131,16 +131,31 @@ class TinyMceInline extends Widget {
         $js[] = "
             tinymce.init($options);
  
-tinymce.init({
-  selector: '.edit_mode_title',
-  inline: true,
-  plugins: 'save',
-  toolbar: 'save undo redo',
-  menubar: false
-});
+            tinymce.init({
+                selector: '.edit_mode_title',
+                inline: true,
+                plugins: 'save',
+                toolbar: 'save undo redo',
+                menubar: false,
+                save_onsavecallback: function(){
+                    var form = this.formElement;
+                    $.ajax({
+                        url:form.action,
+                        type:'POST',
+                        dataType:'json',
+                        data:$(form).serialize()+'&ajax=true',
+                        success:function(data){
+                            if(data.success){
+                                common.notify(data.message,'success');
+                            }else{
+                                common.notify('Error','error');
+                            }
+                        }
+                    });
+                }
+            });";
 
 
-                ";
         if ($this->triggerSaveOnBeforeValidateForm) {
             //$js[] = "$('#{$id}').parents('form').on('beforeValidate', function() { tinymce.triggerSave(); });";
         }
