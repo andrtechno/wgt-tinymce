@@ -1,9 +1,9 @@
 {
     "name": "panix/wgt-tinymce",
     "description": "Widget Tinymce",
-    "keywords": ["pixelion-cms", "extension", "widget", "form", "tinymce"],
+    "keywords": ["extension", "widget", "form", "tinymce"],
     "homepage": "https://github.com/andrtechno/wgt-tinymce",
-    "type": "extension",
+    "type": "yii2-extension",
     "license": "MIT",
     "authors": [
         {
@@ -14,7 +14,7 @@
     ],
     "require": {
         "panix/engine": "*",
-        "tinymce/tinymce": "~4"
+        "tinymce/tinymce": "^4.9.*"
     },
     "autoload": {
         "psr-4": {
