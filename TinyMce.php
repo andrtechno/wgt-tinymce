@@ -11,6 +11,7 @@
 namespace panix\ext\tinymce;
 
 
+use panix\engine\CMS;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -162,14 +163,9 @@ class TinyMce extends InputWidget
             "pixelion" => $this->assetsPlugins[1] . "/pixelion/plugin.js",
             //"mybbcode" => $this->assetsPlugins[1] . "/mybbcode/plugin.js",
         ];
-        $view = $this->getView();
-        $langAssetBundle = TinyMceLangAsset::register($view);
-        if ($lang !== null && $lang !== 'en') {
-            $langFile = "i18n/{$lang}.js";
+       // $view = $this->getView();
+       // $langAssetBundle = TinyMceLangAsset::register($view);
 
-            $langAssetBundle->js[] = $langFile;
-            $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
-        }
 
 
         $this->clientOptions = ArrayHelper::merge($defaultClientOptions, $this->clientOptions);
@@ -196,17 +192,22 @@ class TinyMce extends InputWidget
      */
     protected function registerClientScript()
     {
+        $lang = Yii::$app->language;
         $js = [];
         $view = $this->getView();
         TinyMceAsset::register($view);
-
-
-        if (isset(Yii::$app->controller->module)) {
-            if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
+        $langAssetBundle = TinyMceLangAsset::register($view);
+        if ($lang !== null && $lang !== 'en') {
+            $langFile = "i18n/{$lang}.js";
+            $langAssetBundle->js[] = $langFile;
+            $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/i18n/{$langFile}";
+        }
+       // if (isset(Yii::$app->controller->module)) {
+           // if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
                 // $moxiemanager_rootpath = Yii::$app->getModule(Yii::$app->controller->module->id)->uploadPath;
 
-            }
-        }
+           // }
+      //  }
 
         $theme = Yii::$app->settings->get('app', 'theme');
         // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
@@ -223,9 +224,12 @@ class TinyMce extends InputWidget
         $bootstrapAsset = \yii\bootstrap4\BootstrapAsset::register($view);
 
         $this->clientOptions['content_css'][] = $bootstrapAsset->baseUrl . '/css/bootstrap.min.css';
+        $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl . '/tinymce.css';
         if (file_exists(Yii::getAlias("@web_theme/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
             $this->clientOptions['content_css'][] = $themeAssetUrl[1] . '/css/tinymce.css';
         }
+
+
         $options = Json::encode($this->clientOptions);
 
         $js[] = "tinymce.init($options);";
