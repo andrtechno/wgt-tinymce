@@ -11,11 +11,11 @@
 namespace panix\ext\tinymce;
 
 
-use panix\engine\CMS;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\web\JsExpression;
 use yii\widgets\InputWidget;
 
 class TinyMce extends InputWidget
@@ -38,12 +38,27 @@ class TinyMce extends InputWidget
      */
     public $triggerSaveOnBeforeValidateForm = true;
     protected $assetsPlugins;
+    public $idCounter;
+
+    /**
+     * @var array the event handlers
+     * https://www.tiny.cloud/docs-4x/advanced/events
+     *
+     * For example you could write the following in your widget configuration:
+     *
+     * ```php
+     * 'clientEvents' => [
+     *     'change' => 'function () { alert('event "change" occured.'); }'
+     * ],
+     * ```
+     */
+    public $clientEvents = [];
 
     public function init()
     {
         parent::init();
         $this->assetsPlugins = Yii::$app->getAssetManager()->publish(Yii::getAlias("@vendor/panix/wgt-tinymce/plugins"));
-
+        $this->idCounter = Html::getInputId($this->model, $this->attribute . '_counter');
 
         $defaultClientOptions = [];
         $lang = Yii::$app->language;
@@ -69,6 +84,30 @@ class TinyMce extends InputWidget
         $defaultClientOptions['moxiemanager_title'] = 'FileManager';
 
 
+        /*$defaultClientOptions['init_instance_callback'] = new JsExpression("function (editor) {
+
+
+
+        editor.on('Init', function (e) {
+            console.log('init',editor.getContent());
+        });
+
+
+        editor.on('Change', function (e) {
+            console.log('Editor contents was changed.');
+        });
+        editor.on('Dirty', function (e) {
+            console.log('Editor is dirty!');
+        });
+        editor.on('NodeChange', function (e) {
+      console.log('Node changed');
+    });
+
+    editor.on('keyup', function (e,b) {
+           console.log('keyup',test,editor.getContent());
+
+    });
+        }");*/
         /*$defaultClientOptions['moxiemanager_image_settings'] = [
             'moxiemanager_title' => 'Images',
             'moxiemanager_extensions' => 'jpg,png,gif',
@@ -163,12 +202,19 @@ class TinyMce extends InputWidget
             "pixelion" => $this->assetsPlugins[1] . "/pixelion/plugin.js",
             //"mybbcode" => $this->assetsPlugins[1] . "/mybbcode/plugin.js",
         ];
-       // $view = $this->getView();
-       // $langAssetBundle = TinyMceLangAsset::register($view);
+        $view = $this->getView();
+        $langAssetBundle = TinyMceLangAsset::register($view);
+        if ($lang !== null && $lang !== 'en') {
+            $langFile = "i18n/{$lang}.js";
 
+            $langAssetBundle->js[] = $langFile;
+            $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/{$langFile}";
+        }
 
 
         $this->clientOptions = ArrayHelper::merge($defaultClientOptions, $this->clientOptions);
+        $containerID = $this->options['id'];
+        $this->registerClientEvents('tinymce', $containerID);
 
     }
 
@@ -182,9 +228,92 @@ class TinyMce extends InputWidget
         } else {
             echo Html::textarea($this->name, $this->value, $this->options);
         }
-
+        if (isset($this->options['maxlength'])) {
+            echo '<div id="' . $this->idCounter . '" class="co"><span class="current">0</span>/' . $this->options['maxlength'] . '</div>';
+        }
 
         $this->registerClientScript();
+    }
+
+
+    protected function registerClientEvents($name, $id)
+    {
+
+        if (isset($this->options['maxlength'])) {
+            $this->view->registerJs("
+        function fnTinyMceCounter(selector, counter){
+                var maxlength = {$this->options['maxlength']}; 
+                var percent = (counter * 100 / maxlength);
+                var container = $(selector);
+                if(percent >= 80){
+                    container.removeClass().addClass('co text-danger');
+                } else if(percent >= 50) {
+                    container.removeClass().addClass('co text-warning');
+                } else {
+                    container.removeClass().addClass('co text-success');
+                }
+                container.find('.current').html(counter);
+                                
+        }", $this->view::POS_END, 'fnTinyMceCounter');
+
+            // $this->clientOptions['max_chars']=$this->options['maxlength'];
+
+            $this->clientEvents['keydown'] = "function (e) {
+                var allowedKeys = [8, 37, 38, 39, 40, 46];
+                var key = e.keyCode;
+                var maxlength = {$this->options['maxlength']};
+                var length = $.trim(editor.getContent({format : 'text'})).length;
+                if (allowedKeys.indexOf(e.keyCode) != -1) {
+                    length-=1;
+                    fnTinyMceCounter('#{$this->idCounter}',length);
+                    return true;
+                };
+                length+=1;
+
+                if(length > maxlength && key != 8 && key != 46){
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+                fnTinyMceCounter('#{$this->idCounter}',length);
+                return true;
+            }";
+            $this->clientEvents['Init'] = "function (e) {
+                var length = editor.getContent({format : 'text'}).length;
+                fnTinyMceCounter('#{$this->idCounter}',length);
+
+            }";
+            $this->clientEvents['ExecCommand'] = "function (e) {
+                var content = editor.getContent({format : 'text'});
+                $('#{$this->idCounter} .current').html(content.length);
+            }";
+        }
+        if (!empty($this->clientEvents)) {
+            $js = [];
+            $jsSetup = [];
+            foreach ($this->clientEvents as $event => $handler) {
+                if (isset($this->clientEventMap[$event])) {
+                    $eventName = $this->clientEventMap[$event];
+                } else {
+                    $eventName = strtolower($event);
+                }
+                if (in_array($eventName, ['init', 'keyup'])) {
+                    $jsSetup[] = "editor.on('$eventName', $handler);";
+                } else {
+                    $js[] = "editor.on('$eventName', $handler);";
+                }
+
+            }
+            if ($jsSetup) {
+                $this->clientOptions['setup'] = new JsExpression('function (editor) {
+            ' . implode("\n", $jsSetup) . '
+            }');
+            }
+            $this->clientOptions['init_instance_callback'] = new JsExpression('function (editor) {
+            ' . implode("\n", $js) . '
+            }');
+            // $this->getView()->registerJs(implode("\n", $js));
+        }
     }
 
     /**
@@ -192,22 +321,17 @@ class TinyMce extends InputWidget
      */
     protected function registerClientScript()
     {
-        $lang = Yii::$app->language;
         $js = [];
         $view = $this->getView();
         TinyMceAsset::register($view);
-        $langAssetBundle = TinyMceLangAsset::register($view);
-        if ($lang !== null && $lang !== 'en') {
-            $langFile = "i18n/{$lang}.js";
-            $langAssetBundle->js[] = $langFile;
-            $this->clientOptions['language_url'] = $langAssetBundle->baseUrl . "/i18n/{$langFile}";
-        }
-       // if (isset(Yii::$app->controller->module)) {
-           // if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
+
+
+        if (isset(Yii::$app->controller->module)) {
+            if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
                 // $moxiemanager_rootpath = Yii::$app->getModule(Yii::$app->controller->module->id)->uploadPath;
 
-           // }
-      //  }
+            }
+        }
 
         $theme = Yii::$app->settings->get('app', 'theme');
         // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
@@ -224,18 +348,16 @@ class TinyMce extends InputWidget
         $bootstrapAsset = \yii\bootstrap4\BootstrapAsset::register($view);
 
         $this->clientOptions['content_css'][] = $bootstrapAsset->baseUrl . '/css/bootstrap.min.css';
-        $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl . '/tinymce.css';
         if (file_exists(Yii::getAlias("@web_theme/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
             $this->clientOptions['content_css'][] = $themeAssetUrl[1] . '/css/tinymce.css';
         }
-
-
         $options = Json::encode($this->clientOptions);
 
         $js[] = "tinymce.init($options);";
         if ($this->triggerSaveOnBeforeValidateForm) {
             $js[] = "$('#{$this->options['id']}').parents('form').on('beforeValidate', function() { tinymce.triggerSave(); });";
         }
+
         $view->registerJs(implode("\n", $js));
     }
 
