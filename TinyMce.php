@@ -38,10 +38,10 @@ class TinyMce extends InputWidget
      */
     public $triggerSaveOnBeforeValidateForm = true;
     protected $assetsPlugins;
-    public $idCounter;
+    private $idCounter;
 
     /**
-     * @var array the event handlers
+     * @var array the event handlers for the underlying jQuery UI widget.
      * https://www.tiny.cloud/docs-4x/advanced/events
      *
      * For example you could write the following in your widget configuration:
@@ -264,11 +264,12 @@ class TinyMce extends InputWidget
                 var maxlength = {$this->options['maxlength']};
                 var length = $.trim(editor.getContent({format : 'text'})).length;
                 if (allowedKeys.indexOf(e.keyCode) != -1) {
-                    length-=1;
+                    if(length)
+                        length -= 1;
                     fnTinyMceCounter('#{$this->idCounter}',length);
                     return true;
                 };
-                length+=1;
+                length += 1;
 
                 if(length > maxlength && key != 8 && key != 46){
                     e.preventDefault();
