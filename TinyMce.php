@@ -333,25 +333,29 @@ class TinyMce extends InputWidget
 
             }
         }
-
-        $theme = Yii::$app->settings->get('app', 'theme');
-        // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
-
-
-        $class = "\app\web\themes\{$theme}\assets\ThemeAsset";
-        $themeAsset = Yii::createObject("\\app\\web\\themes\\{$theme}\\ThemeAsset");
+        if (Yii::$app->has('settings')) {
+            $theme = Yii::$app->settings->get('app', 'theme');
+            // $this->clientOptions['content_css'][] = $langAssetBundle->baseUrl.'/tinymce-stickytoolbar.css';
 
 
-        $themeAssetUrl = (new \yii\web\AssetManager)->publish($themeAsset->sourcePath);
+            $class = "\app\web\themes\{$theme}\assets\ThemeAsset";
+            $themeAsset = Yii::createObject("\\app\\web\\themes\\{$theme}\\ThemeAsset");
+
+
+            $themeAssetUrl = (new \yii\web\AssetManager)->publish($themeAsset->sourcePath);
+            if (file_exists(Yii::getAlias("@web_theme/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
+                $this->clientOptions['content_css'][] = $themeAssetUrl[1] . '/css/tinymce.css';
+            }
+        }
+
+
+
         // $bootstrapAssetUrl = (new \yii\web\AssetManager)->publish(Yii::createObject("\yii\bootstrap4\BootstrapAsset")->sourcePath);
 
 
         $bootstrapAsset = \yii\bootstrap4\BootstrapAsset::register($view);
-
         $this->clientOptions['content_css'][] = $bootstrapAsset->baseUrl . '/css/bootstrap.min.css';
-        if (file_exists(Yii::getAlias("@web_theme/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
-            $this->clientOptions['content_css'][] = $themeAssetUrl[1] . '/css/tinymce.css';
-        }
+
         $options = Json::encode($this->clientOptions);
 
         $js[] = "tinymce.init($options);";
