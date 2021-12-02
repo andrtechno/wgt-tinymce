@@ -55,11 +55,11 @@ class TinyMceInline extends Widget {
 
         $moxiemanager_rootpath = '/uploads';
         //die(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath));
-        if (isset(Yii::$app->controller->module)) {
-            if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
+        //if (isset(Yii::$app->controller->module)) {
+        //    if (file_exists(Yii::getAlias(Yii::$app->getModule(Yii::$app->controller->module->id)->uploadAliasPath))) {
              //   $moxiemanager_rootpath = Yii::$app->getModule(Yii::$app->controller->module->id)->uploadPath;
-            }
-        }
+        //    }
+        //}
 
         $lang = Yii::$app->language;
         $js = [];
