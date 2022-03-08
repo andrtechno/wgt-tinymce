@@ -343,7 +343,7 @@ class TinyMce extends InputWidget
 
 
             $themeAssetUrl = (new \yii\web\AssetManager)->publish($themeAsset->sourcePath);
-            if (file_exists(Yii::getAlias("@web_theme/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
+            if (file_exists(Yii::getAlias("@theme/assets/css") . DIRECTORY_SEPARATOR . 'tinymce.css')) {
                 $this->clientOptions['content_css'][] = $themeAssetUrl[1] . '/css/tinymce.css';
             }
         }
